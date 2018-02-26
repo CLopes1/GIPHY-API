@@ -1,0 +1,11 @@
+
+* {
+    box-sizing: border-box;
+}
+
+.jumbotron {
+    /* margin-top:100px; */
+    width:100%;
+    background: rgba(212, 210, 210, 0.6);
+    color:black;
+}

@@ -7,16 +7,18 @@ $("document").ready(function () {
     // Loop through the array and append a button.
     for (var i = 0; i < topicsArr.length; i++) {
 
-        var topicBtn = $("<button>")
-        topicBtn.attr("type","button")
-        topicBtn.attr("class", "btn btn-primary topic-button topic topic-button-color")
-        topicBtn.attr("data-topic", topicsArr[i])
-        topicBtn.text(topicsArr[i])
-        $("#topics").append(topicBtn)
+        $("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + i + '" value="' + topicsArr[i] + '">' + '</input>');
     }
 
     //When user clicks on a button the page should grab 10 static, 
     // non-animated gif images from the GIPHY API and place them on the page.
+
+    $("#topics").on("click", function(event) {
+        var btnTopic =$(event.target).val();
+        console.log(btnTopic)
+    })
+
+
 
 
     // When the user clicks one of the still GIPHY images, 

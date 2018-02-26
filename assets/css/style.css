@@ -8,4 +8,9 @@
     width:100%;
     background: rgba(212, 210, 210, 0.6);
     color:black;
+    
 }
+
+.topic-button{
+    margin: 10px 5px 10px 5px;
+  }

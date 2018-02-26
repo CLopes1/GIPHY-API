@@ -9,7 +9,7 @@ $("document").ready(function () {
 
         var topicBtn = $("<button>")
         topicBtn.attr("type","button")
-        topicBtn.attr("class", "btn btn-light topic-button topic topic-button-color")
+        topicBtn.attr("class", "btn btn-primary topic-button topic topic-button-color")
         topicBtn.attr("data-topic", topicsArr[i])
         topicBtn.text(topicsArr[i])
         $("#topics").append(topicBtn)

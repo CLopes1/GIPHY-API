@@ -13,7 +13,7 @@ $("document").ready(function () {
     }
 
 
-
+    //To Do
     //*Pull GIPHs onto page
     //When user clicks on a button the page should grab 10 static, 
     // non-animated gif images from the GIPHY API and place them on the page.

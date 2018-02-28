@@ -79,12 +79,10 @@ $("document").ready(function () {
                 // Logic to switch images between still and animated states.
                 $(".card-img-top").on("click", function () {
                     if ($(this).attr("data-state") === "still") {
-                        console.log("true")
                         $(this).attr("src", $(this).attr("data-animate"))
                         $(this).attr("data-state", "animate")
                     }
                     else if ($(this).attr("data-state") === "animate") {
-                        console.log("false")
                         $(this).attr("src", $(this).attr("data-still"))
                         $(this).attr("data-state", "still")
                     }

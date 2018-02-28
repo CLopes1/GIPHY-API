@@ -13,52 +13,9 @@ $("document").ready(function () {
     }
 
     //On topic button click, set the button's value.  
-    $(".topic-button").on("click", function (event) {
-        btnTopic = $(event.target).val().trim()
-        toString(btnTopic)
-        console.log("Chosen topic = " + btnTopic)
+    updateClickEventListeners();
 
-        //Reqeust image info using giphy's API
-        var gifData = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=10&rating=g");
-        gifData.done(function (result) {
-            console.log("API call successful", result);
-
-            //Now you're inside of the data object you requested from giphy. 
-            $(".gifDiv").empty()
-
-            //Loop through queried object
-            for (i = 0; i < 10; i++) {
-                var animatedLink = result.data[i].images.downsized.url
-                var stillLink = result.data[i].images.downsized_still.url
-                var state = "still"
-                var rating = "Rating: " + result.data[i].rating
-
-                //print gifs to the page
-                $("#images").append('<div class="card" style="width: 18rem;">' +
-                    '<img class="card-img-top" data-state =' + state + ' data-still=' + stillLink + 'data-animated=' + animatedLink + ' src=' + stillLink + 'alt="Card image cap">' + '<div class="card-body">' + '<p class="card-text">' + rating + '</p>' +
-                    '</div>' + '</div>');
-            }
-
-            // Logic to switch images between still and animated states.
-            $(".card-img-top").on("click", function () {
-                if ($(this).attr("data-state") === "still") {
-                    console.log("true")
-                    $(this).attr("src", $(this).attr("data-animate"))
-                    $(this).attr("data-state", "animate")
-                }
-                else if ($(this).attr("data-state") === "animate") {
-                    console.log("false")
-                    $(this).attr("src", $(this).attr("data-still"))
-                    $(this).attr("data-state", "still")
-                }
-            })
-
-        }).fail(function (err) {
-            throw err;
-        });
-    });
-
-    //*Add new topic to toics array*
+    //*Add new topic to topics array*
     //-----------------------------------------------------------------------------------------------------------------
 
     $("#add-btn").on("click", function (event) {
@@ -69,9 +26,75 @@ $("document").ready(function () {
         var newTopic = $("#addBox").val().trim();
         console.log("Your new topic is: " + newTopic)
 
-        $("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + newTopic + '" value="' + newTopic + '">' + '</input>');
+        //$("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + newTopic + '" value="' + newTopic + '">' + '</input>');
+        $("#topics").append(`
+            <input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name=${newTopic} value=${newTopic} />
+        `);
+
+        // Attach event listeners
+        updateClickEventListeners();
 
     })
+
+    function updateClickEventListeners() {
+        //On topic button click, set the button's value.  
+        $(".topic-button").on("click", function (event) {
+            btnTopic = $(event.target).val().trim()
+            toString(btnTopic)
+            console.log("Chosen topic = " + btnTopic)
+
+            //Reqeust image info using giphy's API
+            var gifData = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=10&rating=g");
+            gifData.then(function (result) {
+                console.log("API call successful", result);
+
+                //Now you're inside of the data object you requested from giphy. 
+                $("#images").empty()
+
+                //Loop through queried object
+                for (i = 0; i < 10; i++) {
+                    var animatedLink = result.data[i].images.downsized.url
+                    var stillLink = result.data[i].images.downsized_still.url
+                    var state = "still"
+                    var rating = "Rating: " + result.data[i].rating
+
+                    //print gifs to the page
+                    //$("#images").append('<div class="card" style="width: 18rem;">' +
+                    //'<img class="card-img-top" data-state =' + state + ' data-still=' + stillLink + 'data-animated=' + animatedLink + ' src=' + stillLink + ' alt="Card image cap">' + '<div class="card-body">' + '<p class="card-text">' + rating + '</p>' +
+                    //'</div>' + '</div>');
+
+
+                    // string interpolation (USE BACK-TICK `) es6 ecma script 6
+                    // "injecting javascript" - use ${}
+                    $('#images').append(`
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" data-state=${state} data-still=${stillLink} data-animate=${animatedLink} src=${stillLink} alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-text">${rating}</p>
+                        </div>
+                    </div>
+                `);
+                }
+
+                // Logic to switch images between still and animated states.
+                $(".card-img-top").on("click", function () {
+                    if ($(this).attr("data-state") === "still") {
+                        console.log("true")
+                        $(this).attr("src", $(this).attr("data-animate"))
+                        $(this).attr("data-state", "animate")
+                    }
+                    else if ($(this).attr("data-state") === "animate") {
+                        console.log("false")
+                        $(this).attr("src", $(this).attr("data-still"))
+                        $(this).attr("data-state", "still")
+                    }
+                })
+
+            }).fail(function (err) {
+                throw err;
+            });
+        });
+    }
 
 })
 

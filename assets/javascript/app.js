@@ -20,11 +20,11 @@ $("document").ready(function () {
 
 
         //Get request using giphy API
-        var gif = $.get("http://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=10&rating=g");
+        var gif = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=10&rating=g");
         gif.done(function (data) 
 
         { console.log("success got data", data); });
-        
+
         //Now you're inside of the data object you requested from giphy. 
         //print gifs to the page
         

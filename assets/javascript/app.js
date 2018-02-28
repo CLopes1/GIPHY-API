@@ -16,65 +16,62 @@ $("document").ready(function () {
     $(".topic-button").on("click", function (event) {
         btnTopic = $(event.target).val().trim()
         toString(btnTopic)
-        console.log(btnTopic)
+        console.log("Chosen topic = " + btnTopic)
 
+        //Reqeust image info using giphy's API
+        var gifData = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=10&rating=g");
+        gifData.done(function (result) {
+            console.log("API call successful", result);
 
-        //Get request using giphy API
-        var gif = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=10&rating=g");
-        gif.done(function (data) 
+            //Now you're inside of the data object you requested from giphy. 
+            $(".gifDiv").empty()
 
-        { console.log("success got data", data); });
+            //Loop through queried object
+            for (i = 0; i < 10; i++) {
+                var animatedLink = result.data[i].images.downsized.url
+                var stillLink = result.data[i].images.downsized_still.url
+                var state = "still"
+                var rating = "Rating: " + result.data[i].rating
 
-        //Now you're inside of the data object you requested from giphy. 
-        //print gifs to the page
-        
-    //     { $("#images").append('<div class="card" style="width: 18rem;">'+
-    //     '<img class="card-img-top" src="" alt="Card image cap">'+'<div class="card-body">'+'<p class="card-text">Rating'+'</p>'+
-    //     '</div>'+'</div>'); 
-    
-    // });
+                //print gifs to the page
+                $("#images").append('<div class="card" style="width: 18rem;">' +
+                    '<img class="card-img-top" data-state =' + state + ' data-still=' + stillLink + 'data-animated=' + animatedLink + ' src=' + stillLink + 'alt="Card image cap">' + '<div class="card-body">' + '<p class="card-text">' + rating + '</p>' +
+                    '</div>' + '</div>');
+            }
 
+            // Logic to switch images between still and animated states.
+            $(".card-img-top").on("click", function () {
+                if ($(this).attr("data-state") === "still") {
+                    console.log("true")
+                    $(this).attr("src", $(this).attr("data-animate"))
+                    $(this).attr("data-state", "animate")
+                }
+                else if ($(this).attr("data-state") === "animate") {
+                    console.log("false")
+                    $(this).attr("src", $(this).attr("data-still"))
+                    $(this).attr("data-state", "still")
+                }
+            })
 
+        }).fail(function (err) {
+            throw err;
+        });
+    });
 
-})
+    //*Add new topic to toics array*
+    //-----------------------------------------------------------------------------------------------------------------
 
-// When the user clicks one of the still GIPHY images, 
-// the gif should animate. If the user clicks the gif again, it should stop playing.
+    $("#add-btn").on("click", function (event) {
+        event.preventDefault();
+        console.log("you clicked the adder button")
 
+        // Get the adder "value" from the textbox and store it a variable
+        var newTopic = $("#addBox").val().trim();
+        console.log("Your new topic is: " + newTopic)
 
-//*Add new topic to toics array*
-//-----------------------------------------------------------------------------------------------------------------
+        $("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + newTopic + '" value="' + newTopic + '">' + '</input>');
 
-$("#add-btn").on("click", function (event) {
-    event.preventDefault();
-    console.log("you clicked the adder button")
-
-    // Get the adder "value" from the textbox and store it a variable
-    var newTopic = $("#addBox").val().trim();
-    console.log("Your new topic is: " + newTopic)
-
-    $("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + newTopic + '" value="' + newTopic + '">' + '</input>');
-
-})
-
-//To do
-//AJAX Query & Functions
-//Create an AJAX query that uses the giphy API.
-//Any time you click a topics button a function runs to 1)request data from the server and 2)display it
-
-function displayGifs() {
-
-    var query = $(this).attr("data-name");
-    console.log("this = " + this)
-    var queryURL = "https://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy";
-
-}   
-
-   
-
-
-
-
+    })
 
 })
 

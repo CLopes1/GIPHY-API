@@ -24,7 +24,9 @@ $("document").ready(function () {
 
         // Get the adder "value" from the textbox and store it a variable
         var newTopic = $("#addBox").val();
+        // var newTopic =$(event.target).text()
         console.log("Your new topic is: " + newTopic)
+
 
 
         //$("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + newTopic + '" value="' + newTopic + '">' + '</input>');

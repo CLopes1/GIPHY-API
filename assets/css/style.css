@@ -3,12 +3,24 @@
     box-sizing: border-box;
 }
 
+body {
+    background:black;
+}
+
 .jumbotron {
     /* margin-top:100px; */
     width:100%;
     background: rgba(212, 210, 210, 0.6);
     color:black;
-    
+    padding:10px;
+}
+
+#display-4{
+    font-family: 'Frijole', cursive;
+}
+
+p {
+    font-family: 'Rock Salt', cursive;
 }
 
 .topic-button{

@@ -12,7 +12,7 @@ $("document").ready(function () {
         $("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + i + '" value="' + topicsArr[i] + '">' + '</input>');
     }
 
-    //On topic button click, set the button's value.  
+
     updateClickEventListeners();
 
     //*Add new topic to topics array*
@@ -23,8 +23,9 @@ $("document").ready(function () {
         console.log("you clicked the adder button")
 
         // Get the adder "value" from the textbox and store it a variable
-        var newTopic = $("#addBox").val().trim();
+        var newTopic = $("#addBox").val();
         console.log("Your new topic is: " + newTopic)
+
 
         //$("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + newTopic + '" value="' + newTopic + '">' + '</input>');
         $("#topics").append(`
@@ -43,22 +44,24 @@ $("document").ready(function () {
             toString(btnTopic)
             console.log("Chosen topic = " + btnTopic)
 
-            //Reqeust image info using giphy's API
-            var gifData = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=10&rating=g");
+            //Call giphy's API and ask it to return 10 images related to btnTopic with a g rating. 
+            var gifData = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=12&rating=g");
             gifData.then(function (result) {
                 console.log("API call successful", result);
 
                 //Now you're inside of the data object you requested from giphy. 
                 $("#images").empty()
 
-                //Loop through queried object
-                for (i = 0; i < 10; i++) {
+                //Loop through the data object retrieved from API call. 
+                for (i = 0; i < 12; i++) {
                     var animatedLink = result.data[i].images.downsized.url
                     var stillLink = result.data[i].images.downsized_still.url
                     var state = "still"
                     var rating = "Rating: " + result.data[i].rating
 
                     //print gifs to the page
+
+                    // old code without string interpolation
                     //$("#images").append('<div class="card" style="width: 18rem;">' +
                     //'<img class="card-img-top" data-state =' + state + ' data-still=' + stillLink + 'data-animated=' + animatedLink + ' src=' + stillLink + ' alt="Card image cap">' + '<div class="card-body">' + '<p class="card-text">' + rating + '</p>' +
                     //'</div>' + '</div>');
@@ -67,7 +70,7 @@ $("document").ready(function () {
                     // string interpolation (USE BACK-TICK `) es6 ecma script 6
                     // "injecting javascript" - use ${}
                     $('#images').append(`
-                    <div class="card" style="width: 18rem;">
+                    <div class="card mb-4 box-shadow d-inline-block" style="width: 18rem;">
                         <img class="card-img-top" data-state=${state} data-still=${stillLink} data-animate=${animatedLink} src=${stillLink} alt="Card image cap">
                         <div class="card-body">
                             <p class="card-text">${rating}</p>

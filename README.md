@@ -10,6 +10,6 @@ Technology Used
 - JavaScript
 
 
-[link to Giphy API!](http://google.com)
+[link to Giphy API!](https://clopes1.github.io/GIPHY-API/)
 
 ![alt text](/images/1.png)

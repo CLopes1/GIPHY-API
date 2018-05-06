@@ -28,7 +28,6 @@ $("document").ready(function () {
         console.log("Your new topic is: " + newTopic)
 
 
-
         //$("#topics").append('<input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name="' + newTopic + '" value="' + newTopic + '">' + '</input>');
         $("#topics").append(`
             <input type="button" class="btn btn-primary topic-button topic topic-button-color" data-name=${newTopic} value=${newTopic} />
@@ -47,7 +46,7 @@ $("document").ready(function () {
             console.log("Chosen topic = " + btnTopic)
 
             //Call giphy's API and ask it to return 10 images related to btnTopic with a g rating. 
-            var gifData = $.get("https://api.giphy.com/v1/gifs/search?q=" + btnTopic + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=12&rating=g");
+            var gifData = $.get("https://api.giphy.com/v1/gifs/search?q=" + "&api_key=WZw70fBlzuvbsKf9eHwPyYjI6fWkyyL0&limit=12&rating=g");
             gifData.then(function (result) {
                 console.log("API call successful", result);
 

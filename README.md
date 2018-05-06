@@ -11,5 +11,3 @@ Technology Used
 
 
 [link to Giphy API!](https://clopes1.github.io/GIPHY-API/)
-
-![alt text](/images/1.png)
